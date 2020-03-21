@@ -71,6 +71,7 @@ TEST(Stack, PushandPopRandomNumberOfElements)
         ASSERT_EQ(item, holder[i]);
     }
     ASSERT_EQ(st.size(), 0);
+    ASSERT_EQ(st.isEmpty(), true);
 }
 
 
@@ -117,8 +118,16 @@ void push_onto_stack(Stack<int> *st, int thread_id)
         st->push( thread_id*10 + i );
     }
 }
+
+void pop_from_stack(Stack<int> *st)
+{
+    for(int i = 0; i < 10; i++) {
+        st->pop();
+    }
+}
+
 // Non Functional tests
-TEST(Stack, MultiThreadedPush)
+TEST(Stack, MultiThreadedPushandPop)
 {
     std::thread  thrs[10];
     Stack<int> *st = new Stack<int>();
@@ -131,7 +140,19 @@ TEST(Stack, MultiThreadedPush)
         thrs[i].join();
     }
 
-    ASSERT_EQ(st->size(), 100);
+    ASSERT_EQ(st->size(), 100);             /* 10 threads each pushing 10 items so 100 */
+
+    for (int i = 0; i < 10; i++) {
+        thrs[i] = std::thread(pop_from_stack, st);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        thrs[i].join();
+    }
+
+    ASSERT_EQ(st->size(), 0);
+    ASSERT_EQ(st->isEmpty(), true);
+
     delete st;
 }
 
