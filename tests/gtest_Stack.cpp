@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "Stack.hpp"
 #include <random>
+#include <thread>
 
 
 TEST(Stack, StackCreation)
@@ -55,7 +56,7 @@ TEST(Stack, PushandPopRandomNumberOfElements)
 
     std::random_device rd;
     std::mt19937 generator(rd());
-    std::uniform_int_distribution<int> distr(1, 100);
+    std::uniform_int_distribution<int> distr(1, 100);   /* Random number  between 1 and 100 */
     uint32_t size = distr(generator);
     Stack<int> st;
     std::vector<int> holder;
@@ -109,6 +110,30 @@ TEST_F(PrePopulatedStack, PoponPrePopulatedStack)
     ASSERT_EQ(p_st->size(), size-1);            /* Ensure size is decreased by 1 */
 }
 
+
+void push_onto_stack(Stack<int> *st, int thread_id)
+{
+    for(int i = 0; i < 10; i++) {
+        st->push( thread_id*10 + i );
+    }
+}
+// Non Functional tests
+TEST(Stack, MultiThreadedPush)
+{
+    std::thread  thrs[10];
+    Stack<int> *st = new Stack<int>();
+
+    for (int i = 0; i < 10; i++) {
+        thrs[i] = std::thread(push_onto_stack, st, i);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        thrs[i].join();
+    }
+
+    ASSERT_EQ(st->size(), 100);
+    delete st;
+}
 
 int main(int argc, char** argv)
 {
