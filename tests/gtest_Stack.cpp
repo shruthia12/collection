@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "Stack.hpp"
+#include <chrono>
 #include <random>
 #include <thread>
 
@@ -154,6 +155,32 @@ TEST(Stack, MultiThreadedPushandPop)
     ASSERT_EQ(st->isEmpty(), true);
 
     delete st;
+}
+
+TEST(Stack, TimingPushandPopOp)
+{
+    Stack<int> st;
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+    /* Million push */
+    for (int i = 0; i < 1000000; i++) {
+        st.push(i);
+    }
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+    std::cout << "Time to perform 1 Million pushes: " << elapsed_time << " microseconds" << std::endl;
+    ASSERT_EQ(st.size(), 1000000);
+
+    start_time = std::chrono::high_resolution_clock::now();
+    /* Million push */
+    for (int i = 0; i < 1000000; i++) {
+        st.pop();
+    }
+    end_time = std::chrono::high_resolution_clock::now();
+    elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+    std::cout << "Time to perform 1 Million pops: " << elapsed_time << " microseconds" << std::endl;
+    ASSERT_EQ(st.isEmpty(), true);
+
 }
 
 int main(int argc, char** argv)
