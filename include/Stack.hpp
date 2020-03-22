@@ -12,7 +12,10 @@ class Stack
     public:
         Stack():size_(0) {}
         uint32_t size(void) { return size_; }
-        bool isEmpty(void) { return size_ == 0; }
+        bool isEmpty(void) {
+            const std::lock_guard<std::mutex> lock(stack_lock_);
+            return size_ == 0;
+        }
         void push(T item) {
             const std::lock_guard<std::mutex> lock(stack_lock_);
             container_.push_back(item);

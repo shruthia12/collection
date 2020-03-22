@@ -69,4 +69,10 @@ class LinkedList
             size_ -= 1;
         }
 
+        ~LinkedList(void) {
+            while(size_) {
+                pop_front();
+            }
+        }
+
 };
