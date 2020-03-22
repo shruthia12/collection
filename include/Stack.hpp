@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include "LinkedList.hpp"
 #include <mutex>
 
 template <class T>
@@ -7,7 +7,7 @@ class Stack
 {
     private:
         uint32_t size_;
-        std::vector<T> container_;
+        LinkedList<T> container_;
         std::mutex stack_lock_;
     public:
         Stack():size_(0) {}
