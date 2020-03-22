@@ -50,5 +50,23 @@ class LinkedList
             }
             size_ -= 1;
         }
+        T front() {
+            if (size_ == 0) throw ("Nothing to return from empty list");
+            return head_->item;
+        }
+        void pop_front() {
+            if (size_ == 0) throw ("Nothing to pop");
+            if (head_ == tail_) {
+                delete head_;
+                head_ = NULL;
+                tail_ = NULL;
+            } else {
+                struct list_node<T> *node = head_;
+                head_ = head_->next;
+                head_->prev = NULL;
+                delete node;
+            }
+            size_ -= 1;
+        }
 
 };

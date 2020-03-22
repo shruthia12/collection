@@ -19,6 +19,8 @@ TEST(LinkedList, PopandPeekFromEmptyLinkedList)
     LinkedList<int> list;
     ASSERT_ANY_THROW(list.pop_back());
     ASSERT_ANY_THROW(list.back());
+    ASSERT_ANY_THROW(list.front());
+    ASSERT_ANY_THROW(list.pop_front());
 }
 
 TEST(LinkedList, PushIntoEmptyLinkedList)
@@ -126,7 +128,7 @@ TEST_F(PrePopulatedLinkedList, PushonPrePopulatedLinkedList)
     ASSERT_EQ(prev_tail->next, p_list->tail_);
 }
 
-TEST_F(PrePopulatedLinkedList, PoponPrePopulatedLinkedList)
+TEST_F(PrePopulatedLinkedList, PopbackonPrePopulatedLinkedList)
 {
     uint32_t size = p_list->size();
     auto tail = p_list->tail_;
@@ -138,6 +140,20 @@ TEST_F(PrePopulatedLinkedList, PoponPrePopulatedLinkedList)
     ASSERT_EQ(p_list->tail_->prev, prev_prev_tail);
     ASSERT_EQ(p_list->tail_->next, (void *)NULL);
 }
+
+TEST_F(PrePopulatedLinkedList, PopFrontonPrePopulatedLinkedList)
+{
+    uint32_t size = p_list->size();
+    auto head = p_list->head_;
+    auto next_head = head->next;
+    auto next_next_head = next_head->next;
+    p_list->pop_front();
+    ASSERT_EQ(p_list->size(), size-1);            /* Ensure size is decreased by 1 */
+    ASSERT_EQ(p_list->head_, next_head);
+    ASSERT_EQ(p_list->head_->next, next_next_head);
+    ASSERT_EQ(p_list->head_->prev, (void *)NULL);
+}
+
 
 int main(int argc, char** argv)
 {
