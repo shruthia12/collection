@@ -34,3 +34,14 @@ googletest is used for unit testing and is added by CMake using ExternalProject 
 This project relies on Address Sanitizer and Thread Sanitizer supported by llvm or gcc > 4.8
 These are used for non-functional testing apart from performance and thread-safety tests
 
+Also to extract coverage information, needs `lcov`.
+
+On Ubuntu `sudo apt-get install lcov`
+
+Running the tests creates gcno and gcda files. cd into that directory and run
+
+```
+$lcov -c --directory . --output-file main_coverage.info
+$genhtml main_coverage.info --output-directory coverage_report
+```
+
