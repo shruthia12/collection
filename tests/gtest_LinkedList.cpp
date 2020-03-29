@@ -45,7 +45,7 @@ TEST(LinkedList, PushIntoEmptyLinkedList)
 TEST(LinkedList, PushMultipleElementsIntoEmptyLinkedList)
 {
     LinkedList<int> list;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         list.push_back(i+10);
         ASSERT_EQ(list.head_->prev, (void *)NULL);
         ASSERT_EQ(list.tail_->next, (void *)NULL);
@@ -56,7 +56,7 @@ TEST(LinkedList, PushMultipleElementsIntoEmptyLinkedList)
 TEST(LinkedList, PushandPopMultipleElementsIntoEmptyLinkedList)
 {
     LinkedList<int> list;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         list.push_back(i+10);
     }
     ASSERT_EQ(list.size(), 10);           /* After push operation of multiple elements size() returns 10(in this case)*/
@@ -79,13 +79,13 @@ TEST(LinkedList, PushandPopRandomNumberOfElements)
     uint32_t size = distr(generator);
     LinkedList<int> list;
     std::vector<int> holder;
-    for (int i = 0; i < size; i++) {
+    for (uint32_t i = 0; i < size; i++) {
         int item = distr(generator);
         holder.push_back(item);
         list.push_back(item);
     }
     ASSERT_EQ(list.size(), size);
-    for (int i = size-1; i >= 0; i--) {
+    for (int i = int(size)-1; i >= 0; i--) {
         int item = list.back();
         ASSERT_EQ(item, holder[i]);
         list.pop_back();
@@ -107,7 +107,7 @@ class PrePopulatedLinkedList : public ::testing::Test
             std::mt19937 generator(rd());
             std::uniform_int_distribution<int> distr(1, 100);
             uint32_t size = distr(generator);
-            for (int i = 0; i < size; i++) {
+            for (uint32_t i = 0; i < size; i++) {
                 int item = distr(generator);
                 p_list->push_back(item);
             }

@@ -29,7 +29,7 @@ TEST(Queue, enqueueIntoEmptyQueue)
 TEST(Queue, enqueueMultipleElementsIntoEmptyQueue)
 {
     Queue<int> q;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         q.enqueue(i+10);
     }
     ASSERT_EQ(q.size(), 10);               /* After enqueue operation of multiple elements size() returns 10(in this case)*/
@@ -38,11 +38,11 @@ TEST(Queue, enqueueMultipleElementsIntoEmptyQueue)
 TEST(Queue, enqueueanddequeueMultipleElementsIntoEmptyQueue)
 {
     Queue<int> q;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         q.enqueue(i+10);
     }
     ASSERT_EQ(q.size(), 10);           /* After enqueue operation of multiple elements size() returns 10(in this case)*/
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         ASSERT_EQ(q.dequeue(), i+10);      /* check if the same elements are dequeueped in reverse order */
     }
     ASSERT_EQ(q.size(), 0);
@@ -59,13 +59,13 @@ TEST(Queue, enqueueanddequeueRandomNumberOfElements)
     uint32_t size = distr(generator);
     Queue<int> q;
     std::vector<int> holder;
-    for (int i = 0; i < size; i++) {
+    for (uint32_t i = 0; i < size; i++) {
         int item = distr(generator);
         holder.push_back(item);
         q.enqueue(item);
     }
     ASSERT_EQ(q.size(), size);
-    for (int i = 0; i < size; i++) {
+    for (uint32_t i = 0; i < size; i++) {
         int item = q.dequeue();
         ASSERT_EQ(item, holder[i]);
     }
@@ -85,7 +85,7 @@ class PredequeueulatedQueue : public ::testing::Test
             std::mt19937 generator(rd());
             std::uniform_int_distribution<int> distr(1, 100);
             uint32_t size = distr(generator);
-            for (int i = 0; i < size; i++) {
+            for (uint32_t i = 0; i < size; i++) {
                 int item = distr(generator);
                 p_q->enqueue(item);
             }

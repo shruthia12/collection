@@ -30,11 +30,11 @@ TEST(Stack, PushIntoEmptyStack)
 TEST(Stack, PushMultipleElementsIntoEmptyStack)
 {
     Stack<int> st;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         st.push(i+10);
     }
     ASSERT_EQ(st.size(), 10);               /* After push operation of multiple elements size() returns 10(in this case)*/
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         //ASSERT_EQ(st.container_[i], i+10);  /* check if the same elements are pushed into the container*/
     }
 }
@@ -42,7 +42,7 @@ TEST(Stack, PushMultipleElementsIntoEmptyStack)
 TEST(Stack, PushandPopMultipleElementsIntoEmptyStack)
 {
     Stack<int> st;
-    for (int i = 0; i < 10; i++) {
+    for (uint32_t i = 0; i < 10; i++) {
         st.push(i+10);
     }
     ASSERT_EQ(st.size(), 10);           /* After push operation of multiple elements size() returns 10(in this case)*/
@@ -61,13 +61,13 @@ TEST(Stack, PushandPopRandomNumberOfElements)
     uint32_t size = distr(generator);
     Stack<int> st;
     std::vector<int> holder;
-    for (int i = 0; i < size; i++) {
+    for (uint32_t i = 0; i < size; i++) {
         int item = distr(generator);
         holder.push_back(item);
         st.push(item);
     }
     ASSERT_EQ(st.size(), size);
-    for (int i = size-1; i >= 0; i--) {
+    for (int i = int(size)-1; i >= 0; i--) {
         int item = st.pop();
         ASSERT_EQ(item, holder[i]);
     }
@@ -87,7 +87,7 @@ class PrePopulatedStack : public ::testing::Test
             std::mt19937 generator(rd());
             std::uniform_int_distribution<int> distr(1, 100);
             uint32_t size = distr(generator);
-            for (int i = 0; i < size; i++) {
+            for (uint32_t i = 0; i < size; i++) {
                 int item = distr(generator);
                 p_st->push(item);
             }
@@ -115,14 +115,14 @@ TEST_F(PrePopulatedStack, PoponPrePopulatedStack)
 
 void push_onto_stack(Stack<int> *st, int thread_id)
 {
-    for(int i = 0; i < 10; i++) {
+    for(uint32_t i = 0; i < 10; i++) {
         st->push( thread_id*10 + i );
     }
 }
 
 void pop_from_stack(Stack<int> *st)
 {
-    for(int i = 0; i < 10; i++) {
+    for(uint32_t i = 0; i < 10; i++) {
         st->pop();
     }
 }

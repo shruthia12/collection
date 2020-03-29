@@ -76,6 +76,9 @@ CollectionFactory<T>::~CollectionFactory(void)
             std::cout << "Destroying a LIFO" << std::endl;
             delete st;
             break;
+        default:
+            //throw ("Not a valid collection type");
+            break;
     }
 }
 
@@ -91,6 +94,9 @@ void CollectionFactory<T>::add(T item)
         case CollectionType::LIFO:
             /* Push into stack here */
             st->push(item);
+            break;
+        default:
+            throw ("Not a valid collection type");
             break;
     }
 
@@ -109,6 +115,9 @@ T CollectionFactory<T>::get()
         case CollectionType::LIFO:
             /* pop from stack here */
             item = st->pop();
+            break;
+        default:
+            throw ("Not a valid collection type");
             break;
     }
 
@@ -130,6 +139,9 @@ uint32_t CollectionFactory<T>::size()
             /* pop from stack here */
             size = st->size();
             break;
+        default:
+            throw ("Not a valid collection type");
+            break;
     }
 
     return size;
@@ -150,6 +162,9 @@ bool CollectionFactory<T>::isEmpty()
         case CollectionType::LIFO:
             /* pop from stack here */
             isEmpty = st->isEmpty();
+            break;
+        default:
+            throw ("Not a valid collection type");
             break;
     }
 
