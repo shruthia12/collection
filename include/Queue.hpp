@@ -13,7 +13,7 @@ class Queue
         Queue():size_(0) {}
         uint32_t size(void) { return size_; }
         bool isEmpty(void) {
-            const std::lock_guard<std::mutex> lock(stack_lock_);
+            //const std::lock_guard<std::mutex> lock(stack_lock_);
             return size_ == 0;
         }
         void enqueue(T item) {
@@ -22,8 +22,8 @@ class Queue
             size_ += 1;
         }
         T dequeue(void) {
+            const std::lock_guard<std::mutex> lock(stack_lock_);
             if (!isEmpty()) {
-                const std::lock_guard<std::mutex> lock(stack_lock_);
                 auto item = container_.front();
                 container_.pop_front();
                 size_ -= 1;
